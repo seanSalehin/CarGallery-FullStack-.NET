@@ -1,22 +1,48 @@
 # Car Gallery
 
+<p align="center">
+  <img src="https://img.shields.io/badge/.NET-ASP.NET_Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" />
+  <img src="https://img.shields.io/badge/C%23-Backend-239120?style=for-the-badge&logo=csharp&logoColor=white" />
+  <img src="https://img.shields.io/badge/Bootstrap-UI-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" />
+  <img src="https://img.shields.io/badge/SQL_Server-Database-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white" />
+  <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" />
+</p>
+
+
 A full-stack ASP.NET Core car gallery application with a clean MVC front end, secure authentication, role-based management, and a versioned Web API.
 
 The application lets users browse cars through a modern gallery interface, while admin users can manage the collection by creating, editing, and deleting car listings.
+
+## Table of Contents
+
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Main Pages](#main-pages)
+- [API Highlights](#api-highlights)
+- [Getting Started](#getting-started)
+- [Author](#author)
+
 
 ## Screenshots
 
 ### Home Page
 
-![Home Page](https://i.ibb.co/Q3Q2SSdJ/localhost-7154-page-1-filter-By-name-filter-Query-Toyota-sort-By-sort-Order-asc-page-Size-6-3.png)
+<p align="center">
+  <img src="https://i.ibb.co/Q3Q2SSdJ/localhost-7154-page-1-filter-By-name-filter-Query-Toyota-sort-By-sort-Order-asc-page-Size-6-3.png" alt="Home Page" width="650" />
+</p>
 
 ### Register Page
 
-![Login Page](https://i.ibb.co/9mbPvDWg/Screenshot-2026-05-30-143645.jpg)
+<p align="center">
+  <img src="https://i.ibb.co/9mbPvDWg/Screenshot-2026-05-30-143645.jpg" alt="Register Page" width="650" />
+</p>
 
 ### Admin Page
 
-![Edit Car Page](https://i.ibb.co/twt8887D/Screenshot-2026-05-30-143741.jpg)
+<p align="center">
+  <img src="https://i.ibb.co/twt8887D/Screenshot-2026-05-30-143741.jpg" alt="Admin Page" width="650" />
+</p>
 
 ## Features
 
