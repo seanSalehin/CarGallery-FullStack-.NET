@@ -1,4 +1,9 @@
-# Car Gallery
+<h1 align="center">🚗 Car Gallery</h1>
+
+<p align="center">
+      A full-stack ASP.NET Core car gallery application with a clean MVC front end, secure authentication, role-based management, and a versioned Web API.
+</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/.NET-ASP.NET_Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" />
@@ -8,8 +13,6 @@
   <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" />
 </p>
 
-
-A full-stack ASP.NET Core car gallery application with a clean MVC front end, secure authentication, role-based management, and a versioned Web API.
 
 The application lets users browse cars through a modern gallery interface, while admin users can manage the collection by creating, editing, and deleting car listings.
 
