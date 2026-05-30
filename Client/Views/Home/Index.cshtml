@@ -1,318 +1,221 @@
 ﻿@using Gateway_API_Client
 @model IEnumerable<CarsDTO>
 
-
-<!-- Hero Carousel Section -->
-<div id="heroCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="carousel-slide" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                <div class="carousel-caption-custom">
-                    <h1 class="display-3 fw-bold mb-4 animate-fade-in">Welcome to Luxury Villas</h1>
-                    <p class="lead mb-4 fs-4">Discover your perfect getaway in paradise</p>
-                    <a href="#villa-listings" class="btn btn-light btn-lg px-5 smooth-scroll">
-                        <i class="bi bi-arrow-down-circle"></i> Explore Villas
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="carousel-slide" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                <div class="carousel-caption-custom">
-                    <h1 class="display-3 fw-bold mb-4 animate-fade-in">Premium Amenities</h1>
-                    <p class="lead mb-4 fs-4">Experience luxury living at its finest</p>
-                    <a href="#villa-listings" class="btn btn-light btn-lg px-5 smooth-scroll">
-                        <i class="bi bi-star-fill"></i> View Collection
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="carousel-slide" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                <div class="carousel-caption-custom">
-                    <h1 class="display-3 fw-bold mb-4 animate-fade-in">Book Your Dream Villa</h1>
-                    <p class="lead mb-4 fs-4">Unforgettable memories await you</p>
-                    <a href="#villa-listings" class="btn btn-light btn-lg px-5 smooth-scroll">
-                        <i class="bi bi-calendar-check"></i> Check Availability
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-
-<div class="container mt-4" id="villa-listings">
-    <!-- Header Section -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="text-center">
-                <h2 class="display-4 fw-bold text-primary">
-                    <i class="bi bi-house-door-fill"></i> Luxury Villa Collection
-                </h2>
-                <p class="lead text-muted">Browse our exclusive selection of premium properties</p>
-                <div class="divider-custom">
-                    <div class="divider-line"></div>
-                    <div class="divider-icon"><i class="bi bi-gem"></i></div>
-                    <div class="divider-line"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @if (TempData["error"] !=null)
+@{
+    ViewData["Title"] = "Gallery";
+    var cars = Model?.ToList() ?? new List<CarsDTO>();
+    var currentPage = ViewBag.Page is int viewPage ? viewPage : 1;
+    var pageSize = ViewBag.PageSize is int currentPageSize ? currentPageSize : 6;
+    var totalPages = ViewBag.TotalPages is int currentTotalPages ? currentTotalPages : 1;
+    var totalRecords = ViewBag.TotalRecords is int currentTotalRecords ? currentTotalRecords : cars.Count;
+    var filterBy = ViewBag.FilterBy as string ?? "";
+    var filterQuery = ViewBag.FilterQuery as string ?? "";
+    var sortBy = ViewBag.SortBy as string ?? "";
+    var sortOrder = ViewBag.SortOrder as string ?? "asc";
+    var startingPrice = cars.Any() ? cars.Min(c => c.price) : 0;
+    var averageRating = cars.Any() ? cars.Average(c => c.Rate) : 0;
+    totalPages = Math.Max(totalPages, 1);
+    currentPage = Math.Clamp(currentPage, 1, totalPages);
+    string PageLink(int targetPage)
     {
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-triangle-fill"></i> @TempData["error"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+        return Url.Action("Index", new { page = targetPage, pageSize = pageSize, filterBy = filterBy, filterQuery = filterQuery, sortBy = sortBy, sortOrder = sortOrder }) ?? "#";
     }
+}
 
-    @if (Model == null || !Model.Any())
-    {
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info text-center" role="alert">
-                    <i class="bi bi-info-circle-fill fs-1 d-block mb-3"></i>
-                    <h4>No Villas Available</h4>
-                    <p class="mb-0">There are currently no villas to display. Please check back later!</p>
+<section class="hero-section">
+    <div class="hero-orb hero-orb-one"></div>
+    <div class="hero-orb hero-orb-two"></div>
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-copy">
+                <span class="eyebrow"> Car gallery</span>
+                <h1>Ready to get behind the wheel?</h1>
+                <div class="hero-actions">
+                    <a href="#cars" class="btn btn-brand btn-lg">
+                        <i class="bi bi-stars me-2"></i>Enter Showroom
+                    </a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="/Car/Index" class="btn btn-outline-light-dark btn-lg">
+                            <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                        </a>
+                    }
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <strong>@totalRecords</strong>
+                        <span>Total cars</span>
+                    </div>
+                    <div>
+                        <strong>$@startingPrice.ToString("N0")</strong>
+                        <span>Starting from</span>
+                    </div>
+                    <div>
+                        <strong>@averageRating.ToString("0.0")</strong>
+                        <span>Average rating</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-    else
-    {
-        @if(Model.Count()>0)
-        {
-            <!-- Car Cards Grid -->
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                @foreach (var car in Model)
+            <div class="hero-showcase">
+                @{
+                    var heroCar = cars.FirstOrDefault();
+                }
+                @if (heroCar != null && !string.IsNullOrWhiteSpace(heroCar.ImageUrl))
                 {
-                    <div class="col">
-                        <div class="card h-100 shadow-sm hover-shadow transition">
-                            <!-- Car Image -->
-                            <div class="position-relative overflow-hidden">
-                                @if (!string.IsNullOrEmpty(car.ImageUrl))
+                    <img src="@heroCar.ImageUrl" alt="@heroCar.Name" />
+                }
+                else
+                {
+                    <div class="hero-placeholder">
+                        <i class="bi bi-car-front-fill"></i>
+                    </div>
+                }
+                <div class="floating-card top-card">
+                    <i class="bi bi-stars"></i>
+                    <span> Showroom</span>
+                </div>
+                <div class="floating-card bottom-card">
+                    <i class="bi bi-arrow-left-right"></i>
+                    <span>Find Your Car</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cars" class="gallery-section">
+    <div class="container">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">Search cockpit</span>
+                <h2 style="color: #584563">Featured cars</h2>
+            </div>
+            <span class="pill-soft">Page @currentPage of @totalPages</span>
+        </div>
+
+        @if (TempData["error"] != null)
+        {
+            <div class="alert app-alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="feature-strip">
+            <span><i class="bi bi-palette-fill"></i> Showroom</span>
+            <span><i class="bi bi-sliders2"></i> Smart filtering</span>
+        </div>
+
+        <form method="get" action="/" class="filter-panel filter-panel-featured">
+            <input type="hidden" name="page" value="1" />
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">Search by</label>
+                    <select name="filterBy" class="form-select app-input">
+                        <option value="" selected="@(filterBy == "")">Any field</option>
+                        <option value="name" selected="@(filterBy == "name")">Name</option>
+                        <option value="details" selected="@(filterBy == "details")">Details</option>
+                        <option value="rate" selected="@(filterBy == "rate")">Exact rating</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Search</label>
+                    <input name="filterQuery" value="@filterQuery" class="form-control app-input" placeholder="Tesla, Mustang, electric, 4.9" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Sort by</label>
+                    <select name="sortBy" class="form-select app-input">
+                        <option value="" selected="@(sortBy == "")">Default</option>
+                        <option value="name" selected="@(sortBy == "name")">Name</option>
+                        <option value="rate" selected="@(sortBy == "rate")">Rating</option>
+                        <option value="price" selected="@(sortBy == "price")">Price</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Order</label>
+                    <select name="sortOrder" class="form-select app-input">
+                        <option value="asc" selected="@(sortOrder == "asc")">Ascending</option>
+                        <option value="desc" selected="@(sortOrder == "desc")">Descending</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Page size</label>
+                    <select name="pageSize" class="form-select app-input">
+                        <option value="3" selected="@(pageSize == 3)">3</option>
+                        <option value="6" selected="@(pageSize == 6)">6</option>
+                        <option value="9" selected="@(pageSize == 9)">9</option>
+                        <option value="12" selected="@(pageSize == 12)">12</option>
+                    </select>
+                </div>
+                <div class="col-12 d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-brand">
+                        <i class="bi bi-funnel me-2"></i>Apply
+                    </button>
+                    <a href="/" class="btn btn-outline-light-dark">
+                        <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        @if (!cars.Any())
+        {
+            <div class="empty-state">
+                <i class="bi bi-car-front"></i>
+                <h3>No cars available</h3>
+                <p>No cars match the current filters. Reset the filters or check again later.</p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var car in cars)
+                {
+                    var details = string.IsNullOrWhiteSpace(car.Details) ? "No details available for this car yet." : car.Details;
+                    <div class="col-md-6 col-xl-4">
+                        <article class="car-card">
+                            <div class="car-card-media">
+                                @if (!string.IsNullOrWhiteSpace(car.ImageUrl))
                                 {
-                                    <img src="@car.ImageUrl" class="card-img-top villa-image" style="height: 250px; object-fit: cover;">
+                                    <img src="@car.ImageUrl" alt="@car.Name" />
                                 }
                                 else
                                 {
-                                    <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 250px;">
-                                        <i class="bi bi-image text-white" style="font-size: 4rem;"></i>
+                                    <div class="car-card-placeholder">
+                                        <i class="bi bi-image"></i>
                                     </div>
                                 }
-
-                                <!-- Price Badge -->
-                                <div class="position-absolute top-0 end-0 m-3">
-                                    <span class="badge bg-success fs-6 px-3 py-2 rounded-pill shadow">
-                                        $@car.price.ToString("N0")
-                                    </span>
-                                </div>
+                                <div class="price-badge">$@car.price.ToString("N0")</div>
+                                <div class="rating-badge"><i class="bi bi-star-fill"></i>@car.Rate</div>
                             </div>
-
-                            <!-- Card Body -->
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-primary fw-bold mb-3">@car.Name</h5>
-
-                                <p class="card-text text-muted flex-grow-1">
-                                    @car.Details
-                                </p>
-
-
-                                <!-- Action Buttons -->
-                                <div class="d-grid gap-2">
-                                    <a href="mailto:hello@dotnetmastery.com?"
-                                       class="btn btn-primary btn-hover">
-                                        <i class="bi bi-envelope"></i> Contact Us
-                                    </a>
-                                </div>
+                            <div class="car-card-body">
+                                <h3>@car.Name</h3>
+                                <p>@details</p>
+                                <a href="mailto:hello@dotnetmastery.com?subject=Car inquiry: @car.Name" class="btn btn-card-action">
+                                    <i class="bi bi-send me-2"></i>Ask About This Car
+                                </a>
                             </div>
-
-                        </div>
+                        </article>
                     </div>
                 }
             </div>
-            <!-- Statistics Section -->
-            <div class="row mt-5 mb-5 justify-content-center">
-                <div class="col-6 ">
-                    <div class="card shadow-lg border-0 stats-card">
-                        <div class="card-body p-4">
-                            <h3 class="text-center mb-4 fw-bold">At a Glance</h3>
-                            <div class="row text-center g-4">
-                                <div class="col-md-6">
-                                    <div class="stat-item">
-                                        <i class="bi bi-house-heart-fill text-primary fs-1 mb-3"></i>
-                                        <h3 class="text-primary fw-bold mb-1">XX</h3>
-                                        <p class="text-muted mb-0">@Model.Count()</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="stat-item">
-                                        <i class="bi bi-cash-coin text-success fs-1 mb-3"></i>
-                                        <h3 class="text-success fw-bold mb-1">@Model.Min(v => v.price).ToString("N0")</h3>
-                                        <p class="text-muted mb-0">Starting From</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <nav class="pagination-shell" aria-label="Car gallery pagination">
+                <a class="btn btn-outline-light-dark @(currentPage <= 1 ? "disabled" : "")" href="@PageLink(currentPage - 1)">
+                    <i class="bi bi-chevron-left me-1"></i>Previous
+                </a>
+                <ul class="pagination mb-0">
+                    @for (var i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link" href="@PageLink(i)">@i</a>
+                        </li>
+                    }
+                </ul>
+                <a class="btn btn-outline-light-dark @(currentPage >= totalPages ? "disabled" : "")" href="@PageLink(currentPage + 1)">
+                    Next<i class="bi bi-chevron-right ms-1"></i>
+                </a>
+            </nav>
         }
-    }
-
-
-</div>
-
-<!-- Custom Styles -->
-<style>
-    /* Carousel Styles */
-    .carousel-slide {
-        height: 500px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-
-    .carousel-caption-custom {
-        text-align: center;
-        color: white;
-        z-index: 10;
-        animation: fadeInUp 1s ease-in-out;
-    }
-
-    @@keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .carousel-fade .carousel-item {
-        transition: opacity 1s ease-in-out;
-    }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-        padding: 20px;
-    }
-
-    /* Divider Styles */
-    .divider-custom {
-        display: flex;
-        align-items: center;
-        margin: 2rem 0;
-    }
-
-    .divider-line {
-        flex: 1;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #667eea, transparent);
-    }
-
-    .divider-icon {
-        padding: 0 1rem;
-        font-size: 1.5rem;
-        color: #667eea;
-    }
-
-    /* Card Hover Effects */
-    .hover-shadow {
-        transition: all 0.3s ease-in-out;
-        border-radius: 15px;
-    }
-
-    .hover-shadow:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 1.5rem 4rem rgba(0,0,0,.2) !important;
-    }
-
-    .villa-image {
-        transition: transform 0.5s ease-in-out;
-    }
-
-    .card:hover .villa-image {
-        transform: scale(1.1);
-    }
-
-    .card {
-        border: none;
-        overflow: hidden;
-        border-radius: 15px;
-    }
-
-    .transition {
-        transition: all 0.3s ease;
-    }
-
-    /* Button Hover Effect */
-    .btn-hover {
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
-    }
-
-    .btn-hover:hover {
-        transform: scale(1.02);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    /* Stats Card */
-    .stats-card {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 15px;
-    }
-
-    .stat-item {
-        padding: 1rem;
-        transition: transform 0.3s ease;
-    }
-
-    .stat-item:hover {
-        transform: translateY(-5px);
-    }
-
-    /* Background Gradient */
-    .bg-gradient-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    /* Smooth Scroll */
-    .smooth-scroll {
-        scroll-behavior: smooth;
-    }
-
-    /* Responsive adjustments */
-    @@media (max-width: 768px) {
-        .carousel-slide {
-            height: 400px;
-        }
-
-        .carousel-caption-custom h1 {
-            font-size: 2rem;
-        }
-
-        .carousel-caption-custom p {
-            font-size: 1rem;
-        }
-    }
-</style>
+    </div>
+</section>

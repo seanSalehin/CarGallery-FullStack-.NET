@@ -1,7 +1,7 @@
-﻿@model Gateway_API_Client.LoginRequestDTO
+﻿@model Gateway_API_Client.RegisterationRequestDTO
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Register";
 }
 
 <section class="auth-screen">
@@ -11,8 +11,8 @@
         <div class="row align-items-center justify-content-center g-5">
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="auth-copy">
-                    <span class="eyebrow">Members area</span>
-                    <h1 style="color: #7a6a83">Sign in and manage your dream garage.</h1>
+                    <span class="eyebrow">Create profile</span>
+                    <h1 style="color: #7a6a83;">Build your access to a sharper car gallery.</h1>
                 </div>
             </div>
             <div class="col-md-8 col-lg-5">
@@ -31,32 +31,45 @@
                     </div>
                 }
                 <div class="auth-card">
-                    <div class="auth-icon">
-                        <i class="bi bi-person-circle"></i>
+                    <div class="auth-icon success">
+                        <i class="bi bi-person-plus-fill"></i>
                     </div>
-                    <h2>Welcome back</h2>
-                    <p class="text-muted mb-4">Login to continue to Car Gallery.</p>
-                    <form action="/Auth/Login" method="post">
+                    <h2>Create account</h2>
+                    <p class="text-muted mb-4">Join Car Gallery and start exploring.</p>
+                    <form action="/Auth/Register" method="post">
                         @Html.AntiForgeryToken()
                         <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+                        <div class="form-floating app-field mb-3">
+                            <input asp-for="Name" class="form-control" placeholder="Full Name" />
+                            <label asp-for="Name">Full name</label>
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
                         <div class="form-floating app-field mb-3">
                             <input asp-for="Email" class="form-control" placeholder="name@example.com" />
                             <label asp-for="Email">Email address</label>
                             <span asp-validation-for="Email" class="text-danger small"></span>
                         </div>
-                        <div class="form-floating app-field mb-4">
+                        <div class="form-floating app-field mb-3">
                             <input asp-for="Password" class="form-control" placeholder="Password" type="password" />
                             <label asp-for="Password">Password</label>
                             <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
+                        <div class="form-floating app-field mb-4">
+                            <select asp-for="Role" class="form-select">
+                                <option value="Customer">Customer</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                            <label asp-for="Role">Account type</label>
+                            <span asp-validation-for="Role" class="text-danger small"></span>
+                        </div>
                         <button type="submit" class="btn btn-brand btn-lg w-100">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                            <i class="bi bi-check-circle me-2"></i>Create Account
                         </button>
                         <div class="auth-divider">
-                            <span>New here?</span>
+                            <span>Already registered?</span>
                         </div>
-                        <a href="/Auth/Register" class="btn btn-outline-light-dark w-100">
-                            <i class="bi bi-person-plus me-2"></i>Create Account
+                        <a href="/Auth/Login" class="btn btn-outline-light-dark w-100">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Sign In Instead
                         </a>
                     </form>
                 </div>

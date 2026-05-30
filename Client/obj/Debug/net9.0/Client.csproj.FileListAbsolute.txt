@@ -21,7 +21,6 @@ C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\rjsmcshtml.dswa
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\scopedcss\bundle\Client.styles.css
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\scopedcss\projectbundle\Client.bundle.scp.css
-C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\compressed\rzq3kiqedm-b9sayid5wm.gz
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\compressed\cwjfkacz2q-61n19gt1b8.gz
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\compressed\qdj333k487-xtxxf3hu2r.gz
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\compressed\0lzhbkdl16-bqjiyaj88i.gz
@@ -105,3 +104,5 @@ C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\bin\Debug\net9.0\Microsoft.Ident
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\Client.sourcelink.json
+C:\Lessons\ASP.NET Core\Auto Gallery Inc\Client\obj\Debug\net9.0\compressed\rzq3kiqedm-5x5f6lsoab.gz

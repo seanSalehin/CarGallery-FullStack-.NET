@@ -9,3 +9,4 @@ C:\Lessons\ASP.NET Core\Auto Gallery Inc\Gateway_API_Client\obj\Debug\net9.0\Gat
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Gateway_API_Client\obj\Debug\net9.0\refint\Gateway_API_Client.dll
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Gateway_API_Client\obj\Debug\net9.0\Gateway_API_Client.pdb
 C:\Lessons\ASP.NET Core\Auto Gallery Inc\Gateway_API_Client\obj\Debug\net9.0\ref\Gateway_API_Client.dll
+C:\Lessons\ASP.NET Core\Auto Gallery Inc\Gateway_API_Client\obj\Debug\net9.0\Gateway_API_Client.sourcelink.json

@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Gateway_API_Client\Gateway_API_Client.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\NewFolder\" />
-  </ItemGroup>
-
 </Project>

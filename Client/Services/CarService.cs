@@ -4,7 +4,7 @@ namespace Client.Services
 {
     public class CarService : BaseService,ICarServices
     {
-        private const string APIEndpoint = "/api/car";
+        private const string APIEndpoint = $"/api/{SD.CurrentApiVersion}/car";
         private readonly IHttpContextAccessor _httpContextAccessor; 
 
         public CarService(IHttpClientFactory httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : base(httpClient, httpContextAccessor)

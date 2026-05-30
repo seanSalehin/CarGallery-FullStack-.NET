@@ -53,6 +53,11 @@ namespace Client.Controllers
                     return RedirectToAction("Index", "Home");
 
                 }
+                else
+                {
+                    TempData["error"] = response?.Message ?? "Login failed. Please try again.";
+                    return View(loginRequestDTO);
+                }
             }
             catch (Exception ex)
             {
@@ -63,7 +68,7 @@ namespace Client.Controllers
 
 
 
-        public IActionResult Registration()
+        public IActionResult Register()
         {
             return View(new RegisterationRequestDTO
             {
@@ -97,7 +102,7 @@ namespace Client.Controllers
             {
                 TempData["error"] = $"An error occured:{ex.Message}";
             }
-            return View();
+            return View(registerationRequestDTO);
         }
 
 

@@ -12,5 +12,6 @@
         }
 
         public const string SessionToken = "JWTToken";
+        public const string CurrentApiVersion = "v2";
     }
 }

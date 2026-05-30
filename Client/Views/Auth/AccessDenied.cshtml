@@ -1,29 +1,22 @@
-﻿<!-----/auth/accessdenied------->
+﻿@{
+    ViewData["Title"] = "Access Denied";
+}
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card shadow mt-5 mb-5">
-                <div class="card-body p-5 text-center">
-                    <!-- Header -->
-                    <div class="mb-4">
-                        <i class="bi bi-shield-exclamation text-warning display-1"></i>
-                    </div>
-
-                    <h3 class="fw-bold text-danger mb-3">Access Denied</h3>
-                    <p class="text-muted mb-4">
-                        Sorry, you don't have permission to access this resource.
-                        Please contact your administrator if you believe this is an error.
-                    </p>
-
-                    <!-- Action Buttons -->
-                    <div class="d-grid gap-2">
-                        <a asp-action="index" asp-controller="home" class="btn btn-primary">
-                            <i class="bi bi-house me-2"></i>Go to Home
-                        </a>
-                    </div>
-                </div>
-            </div>
+<section class="center-screen">
+    <div class="status-card danger">
+        <div class="status-icon">
+            <i class="bi bi-shield-exclamation"></i>
+        </div>
+        <span class="eyebrow">Permission required</span>
+        <h1>Access denied</h1>
+        <p>You do not have permission to open this area. Login with an admin account or return to the gallery.</p>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+            <a asp-action="Index" asp-controller="Home" class="btn btn-brand">
+                <i class="bi bi-house me-2"></i>Go Home
+            </a>
+            <a asp-action="Login" asp-controller="Auth" class="btn btn-outline-light-dark">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+            </a>
         </div>
     </div>
-</div>
+</section>

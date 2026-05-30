@@ -3,6 +3,7 @@ using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using Gateway_API_Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -12,6 +13,12 @@ using WebApplication1.Models;
 using WebApplication1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// ----------- Identity to API ---------------
+//ApplicationUser model is inherited from IdentityUser
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 // -------------------- JWT --------------------
 var jwtSecret = builder.Configuration["JwtSettings:Secret"];
@@ -61,7 +68,7 @@ builder.Services.AddAutoMapper(o =>
     o.CreateMap<Cars, UpdateDTO>().ReverseMap();
     o.CreateMap<Cars, CarsDTO>().ReverseMap();
     o.CreateMap<UpdateDTO, CarsDTO>().ReverseMap();
-    o.CreateMap<User, UserDTO>().ReverseMap();
+    o.CreateMap<ApplicationUser, UserDTO>().ReverseMap();
     o.CreateMap<Features, FeaturesUpdateDTO>().ReverseMap();
     o.CreateMap<Features, FeaturesCreateDTO>().ReverseMap();
     o.CreateMap<Features, FeaturesDTO>()
@@ -188,7 +195,7 @@ if (app.Environment.IsDevelopment())
             var versionName = description.GroupName;           
             var displayName = $"Demo API => {description.ApiVersion}";
 
-            var isDefault = versionName == "v1";
+            var isDefault = versionName == "v2";
 
             options.AddDocument(versionName, displayName, $"/openapi/{versionName}.json", isDefault: isDefault);
         }

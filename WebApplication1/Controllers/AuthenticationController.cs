@@ -45,8 +45,9 @@ namespace WebApplication1.Controllers
             }
             catch (Exception ex)
             {
-                var errorReponse = ApiResponse<object>.Error(500, "An Error Occured Durring Registration", ex.Message);
-                return StatusCode(500, errorReponse);
+                var msg = ex.InnerException?.Message ?? ex.Message;
+                var errorResponse = ApiResponse<object>.Error(500, msg);
+                return StatusCode(500, errorResponse);
             }
             }
 
@@ -73,7 +74,7 @@ namespace WebApplication1.Controllers
                 var loginResponse = await _authService.LoginAsync(loginRequest);
                 if(loginResponse == null)
                 {
-                    return BadRequest(ApiResponse<object>.BadRequest("Login Failed"));
+                    return BadRequest(ApiResponse<object>.BadRequest("Login Failed! Please Check Your Username Or Password!"));
                 }
                 var response = ApiResponse<LoginResponseDTO>.Ok(loginResponse, "Login Successfully");
                 return Ok(response);
