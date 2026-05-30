@@ -1,4 +1,4 @@
-<h1 align="center">🚗 Car Gallery</h1>
+<h1 align="center"> Car Gallery</h1>
 
 <p align="center">
       A full-stack ASP.NET Core car gallery application with a clean MVC front end, secure authentication, role-based management, and a versioned Web API.
